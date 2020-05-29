@@ -187,7 +187,7 @@ class Info_Box extends Powerpack_Widget {
         $this->add_responsive_control(
             'icon_size',
             [
-                'label'                 => __( 'Icon Size', 'powerpack' ),
+                'label'                 => __( 'Size', 'powerpack' ),
                 'type'                  => Controls_Manager::SLIDER,
                 'default'               => [
                     'size'  => 30,
@@ -206,6 +206,28 @@ class Info_Box extends Powerpack_Widget {
                 ],
                 'selectors'             => [
                     '{{WRAPPER}} .pp-info-box-icon' => 'font-size: {{SIZE}}{{UNIT}}',
+                ],
+            ]
+        );
+        
+        $this->add_responsive_control(
+            'icon_rotation',
+            [
+                'label'                 => __( 'Rotate', 'powerpack' ),
+                'type'                  => Controls_Manager::SLIDER,
+                'range'                 => [
+                    'px' => [
+                        'min'   => 0,
+                        'max'   => 360,
+                        'step'  => 1,
+                    ],
+                ],
+                'size_units'            => '',
+                'condition'             => [
+                    'icon_type!'   => 'none',
+                ],
+                'selectors'             => [
+                    '{{WRAPPER}} .pp-info-box-icon' => 'transform: rotate( {{SIZE}}deg );',
                 ],
             ]
         );
@@ -233,7 +255,7 @@ class Info_Box extends Powerpack_Widget {
                 ],
                 'size_units'            => [ 'px', '%' ],
                 'selectors'             => [
-                    '{{WRAPPER}}.pp-info-box-top .pp-info-box-icon img, {{WRAPPER}}.pp-info-box-left .pp-info-box-icon, {{WRAPPER}}.pp-info-box-right .pp-info-box-icon' => 'width: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}}.pp-info-box-top .pp-info-box-icon img, {{WRAPPER}}.pp-info-box-left .pp-info-box-icon-wrap, {{WRAPPER}}.pp-info-box-right .pp-info-box-icon-wrap' => 'width: {{SIZE}}{{UNIT}}',
                 ],
                 'condition'             => [
                     'icon_type'     => 'image',
@@ -244,7 +266,7 @@ class Info_Box extends Powerpack_Widget {
 		$this->add_responsive_control(
 			'icon_position',
 			[
-				'label'                 => __( 'Layout', 'powerpack' ),
+				'label'                 => __( 'Icon', 'powerpack' ) . ' ' . __( 'Position', 'powerpack' ),
 				'type'                  => Controls_Manager::CHOOSE,
 				'default'               => 'top',
 				'options'               => [
@@ -272,7 +294,8 @@ class Info_Box extends Powerpack_Widget {
 		$this->add_responsive_control(
 			'icon_vertical_position',
 			[
-				'label'                 => __( 'Icon Position', 'powerpack' ),
+				'label'                 => __( 'Vertical Align', 'powerpack' ),
+				'description'           => __( 'Works in case of left and right icon position', 'powerpack' ),
 				'type'                  => Controls_Manager::CHOOSE,
 				'default'               => 'top',
 				'options'               => [
@@ -290,21 +313,20 @@ class Info_Box extends Powerpack_Widget {
 					],
 				],
 				'selectors'             => [
-					'(desktop){{WRAPPER}}.pp-info-box-left .pp-info-box .pp-info-box-icon'        => 'align-self: {{VALUE}};',
-					'(desktop){{WRAPPER}}.pp-info-box-right .pp-info-box .pp-info-box-icon'       => 'align-self: {{VALUE}};',
-					'(tablet){{WRAPPER}}.pp-info-box-tablet-left .pp-info-box .pp-info-box-icon'  => 'align-self: {{VALUE}};',
-					'(tablet){{WRAPPER}}.pp-info-box-tablet-right .pp-info-box .pp-info-box-icon' => 'align-self: {{VALUE}};',
-					'(mobile){{WRAPPER}}.pp-info-box-mobile-left .pp-info-box .pp-info-box-icon'  => 'align-self: {{VALUE}};',
-					'(mobile){{WRAPPER}}.pp-info-box-mobile-right .pp-info-box .pp-info-box-icon' => 'align-self: {{VALUE}};',
+					'(desktop){{WRAPPER}}.pp-info-box-left .pp-info-box'        => 'align-items: {{VALUE}};',
+					'(desktop){{WRAPPER}}.pp-info-box-right .pp-info-box'       => 'align-items: {{VALUE}};',
+					'(tablet){{WRAPPER}}.pp-info-box-tablet-left .pp-info-box'  => 'align-items: {{VALUE}};',
+					'(tablet){{WRAPPER}}.pp-info-box-tablet-right .pp-info-box' => 'align-items: {{VALUE}};',
+					'(mobile){{WRAPPER}}.pp-info-box-mobile-left .pp-info-box'  => 'align-items: {{VALUE}};',
+					'(mobile){{WRAPPER}}.pp-info-box-mobile-right .pp-info-box' => 'align-items: {{VALUE}};',
 				],
 				'selectors_dictionary'  => [
-					'top'          => 'baseline',
+					'top'          => 'flex-start',
 					'middle'       => 'center',
 					'bottom'       => 'flex-end',
 				],
                 'condition'             => [
                     'icon_type'         => ['icon', 'image', 'text'],
-                    'icon_position'     => ['left', 'right'],
                 ],
 			]
 		);
@@ -510,7 +532,7 @@ class Info_Box extends Powerpack_Widget {
         
         $this->end_controls_section();
 
-        /**
+		/**
 		 * Content Tab: Docs Links
 		 *
 		 * @since 1.4.8
@@ -701,13 +723,13 @@ class Info_Box extends Powerpack_Widget {
         $this->end_controls_section();
 
         /**
-         * Style Tab: Icon Style
+         * Style Tab: Icon
          * -------------------------------------------------
          */
         $this->start_controls_section(
             'section_info_box_icon_style',
             [
-                'label'                 => __( 'Icon Style', 'powerpack' ),
+                'label'                 => __( 'Icon', 'powerpack' ),
                 'tab'                   => Controls_Manager::TAB_STYLE,
                 'condition'             => [
                     'icon_type!' => 'none',
@@ -793,28 +815,6 @@ class Info_Box extends Powerpack_Widget {
 				],
 			]
 		);
-        
-        $this->add_responsive_control(
-            'icon_rotation',
-            [
-                'label'                 => __( 'Icon Rotation', 'powerpack' ),
-                'type'                  => Controls_Manager::SLIDER,
-                'range'                 => [
-                    'px' => [
-                        'min'   => 0,
-                        'max'   => 360,
-                        'step'  => 1,
-                    ],
-                ],
-                'size_units'            => '',
-                'condition'             => [
-                    'icon_type!'   => 'none',
-                ],
-                'selectors'             => [
-                    '{{WRAPPER}} .pp-info-box-icon' => 'transform: rotate( {{SIZE}}deg );',
-                ],
-            ]
-        );
 
 		$this->add_responsive_control(
 			'icon_padding',
@@ -1711,39 +1711,44 @@ class Info_Box extends Powerpack_Widget {
     protected function render() {
         $settings = $this->get_settings_for_display();
         
-        $this->add_render_attribute( 'info-box', 'class', 'pp-info-box' );
-        
-        $this->add_render_attribute( 'info-box-container', 'class', 'pp-info-box-container' );
-            
-        $this->add_render_attribute( 'title-container', 'class', 'pp-info-box-title-container' );
+        $this->add_render_attribute( [
+			'info-box' => [
+				'class' => 'pp-info-box'
+			],
+			'info-box-container' => [
+				'class' => 'pp-info-box-container'
+			],
+			'title-container' => [
+				'class' => 'pp-info-box-title-container'
+			],
+			'heading' => [
+				'class' => 'pp-info-box-title'
+			],
+			'sub_heading' => [
+				'class' => 'pp-info-box-subtitle'
+			],
+			'description' => [
+				'class' => 'pp-info-box-description'
+			]
+		] );
         
         $pp_if_html_tag = 'div';
         $pp_title_html_tag = 'div';
         
-        $this->add_render_attribute( 'heading', 'class', 'pp-info-box-title' );
         $this->add_inline_editing_attributes( 'heading', 'none' );
         $this->add_inline_editing_attributes( 'sub_heading', 'none' );
-        $this->add_render_attribute( 'sub_heading', 'class', 'pp-info-box-subtitle' );
         $this->add_inline_editing_attributes( 'description', 'basic' );
-        $this->add_render_attribute( 'description', 'class', 'pp-info-box-description' );
 
         if ( $settings['link_type'] != 'none' ) {
             if ( ! empty( $settings['link']['url'] ) ) {
-                $this->add_render_attribute( 'link', 'href', esc_url( $settings['link']['url'] ) );
-
-                if ( $settings['link']['is_external'] ) {
-                    $this->add_render_attribute( 'link', 'target', '_blank' );
-                }
-
-                if ( $settings['link']['nofollow'] ) {
-                    $this->add_render_attribute( 'link', 'rel', 'nofollow' );
-                }
+				$this->add_link_attributes( 'link', $settings['link'] );
 
                 if ( $settings['link_type'] == 'box' ) {
                     $pp_if_html_tag = 'a';
                 }
                 elseif ( $settings['link_type'] == 'title' ) {
                     $pp_title_html_tag = 'a';
+					$this->add_link_attributes( 'title-container', $settings['link'] );
                 }
             }
         }
@@ -1768,7 +1773,7 @@ class Info_Box extends Powerpack_Widget {
                 <div class="pp-info-box-title-wrap">
                     <?php
                         if ( ! empty( $settings['heading'] ) ) {
-                            echo '<'.$pp_title_html_tag. ' ' . $this->get_render_attribute_string( 'title-container' ) . $this->get_render_attribute_string( 'link' ) . '>';
+                            echo '<'.$pp_title_html_tag. ' ' . $this->get_render_attribute_string( 'title-container' ) . '>';
                             printf( '<%1$s %2$s>', $settings['title_html_tag'], $this->get_render_attribute_string( 'heading' ) );
                             echo $settings['heading'];
                             printf( '</%1$s>', $settings['title_html_tag'] );
@@ -1821,12 +1826,15 @@ class Info_Box extends Powerpack_Widget {
 				buttonIconHTML = elementor.helpers.renderIcon( view, settings.select_button_icon, { 'aria-hidden': true }, 'i' , 'object' ),
 				buttonMigrated = elementor.helpers.isIconMigrated( settings, 'select_button_icon' );
 
+			view.addRenderAttribute( 'title-container', 'class', 'pp-info-box-title-container' );
+
             if ( settings.link.url != '' ) {
                 if ( settings.link_type == 'box' ) {
                     var pp_if_html_tag = 'a';
                 }
                 else if ( settings.link_type == 'title' ) {
                     var pp_title_html_tag = 'a';
+					view.addRenderAttribute( 'title-container', 'href', settings.link.url );
                 }
                 else if ( settings.link_type == 'button' ) {
                     var pp_button_html_tag = 'a';
@@ -1875,7 +1883,7 @@ class Info_Box extends Powerpack_Widget {
                 <div class="pp-info-box-content">
                     <div class="pp-info-box-title-wrap">
                         <# if ( settings.heading ) { #>
-                            <{{pp_title_html_tag}} class="pp-info-box-title-container" href="{{settings.link.url}}">
+                            <{{pp_title_html_tag}} {{{ view.getRenderAttributeString( 'title-container' ) }}}>
                                 <{{settings.title_html_tag}} class="pp-info-box-title elementor-inline-editing" data-elementor-setting-key="heading" data-elementor-inline-editing-toolbar="none">
                                     {{{ settings.heading }}}
                                 </{{settings.title_html_tag}}>

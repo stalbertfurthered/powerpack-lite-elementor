@@ -478,23 +478,23 @@ class Flipbox extends Powerpack_Widget {
 		 * @access protected
 		 */
 		$this->start_controls_section(
-				'section_help_docs',
-				[
-					'label' => __( 'Help Docs', 'powerpack' ),
-				]
-			);
-			
-			$this->add_control(
-				'help_doc_1',
-				[
-					'type'            => Controls_Manager::RAW_HTML,
-					/* translators: %1$s doc link */
-					'raw'             => sprintf( __( '%1$s Widget Overview %2$s', 'powerpack' ), '<a href="https://powerpackelements.com/docs/powerpack/widgets/flip-box/flip-box-widget-overview/?utm_source=widget&utm_medium=panel&utm_campaign=userkb" target="_blank" rel="noopener">', '</a>' ),
-					'content_classes' => 'pp-editor-doc-links',
-				]
-			);
-	
-			$this->end_controls_section();
+			'section_help_docs',
+			[
+				'label' => __( 'Help Docs', 'powerpack' ),
+			]
+		);
+		
+		$this->add_control(
+			'help_doc_1',
+			[
+				'type'            => Controls_Manager::RAW_HTML,
+				/* translators: %1$s doc link */
+				'raw'             => sprintf( __( '%1$s Widget Overview %2$s', 'powerpack' ), '<a href="https://powerpackelements.com/docs/powerpack/widgets/flip-box/flip-box-widget-overview/?utm_source=widget&utm_medium=panel&utm_campaign=userkb" target="_blank" rel="noopener">', '</a>' ),
+				'content_classes' => 'pp-editor-doc-links',
+			]
+		);
+
+		$this->end_controls_section();
 
         /*-----------------------------------------------------------------------------------*/
         /*	STYLE TAB
@@ -523,10 +523,10 @@ class Flipbox extends Powerpack_Widget {
 			]
 		);
         
-		$this->add_control(
+		$this->add_responsive_control(
 			'content_alignment_front',
 			[
-				'label'                 => esc_html__( 'Text Alignment', 'powerpack' ),
+				'label'                 => esc_html__( 'Alignment', 'powerpack' ),
 				'type'                  => Controls_Manager::CHOOSE,
 				'label_block'           => false,
 				'options'               => [
@@ -550,7 +550,7 @@ class Flipbox extends Powerpack_Widget {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'vertical_position_front',
 			[
 				'label'                 => __( 'Vertical Position', 'powerpack' ),
@@ -697,7 +697,7 @@ class Flipbox extends Powerpack_Widget {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'icon_size_front',
 			[
 				'label'                 => __( 'Icon Size', 'powerpack' ),
@@ -824,7 +824,7 @@ class Flipbox extends Powerpack_Widget {
 			]
 		);
         
-		$this->add_control(
+		$this->add_responsive_control(
 			'content_alignment_back',
 			[
 				'label'                 => esc_html__( 'Alignment', 'powerpack' ),
@@ -851,7 +851,7 @@ class Flipbox extends Powerpack_Widget {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'vertical_position_back',
 			[
 				'label'                 => __( 'Vertical Position', 'powerpack' ),
@@ -998,7 +998,7 @@ class Flipbox extends Powerpack_Widget {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'icon_size_back',
 			[
 				'label'                 => __( 'Icon Size', 'powerpack' ),
@@ -1393,7 +1393,7 @@ class Flipbox extends Powerpack_Widget {
 
 	protected function render() {
 
-   		$settings = $this->get_settings();
+   		$settings = $this->get_settings_for_display();
 
 	  	$flipbox_if_html_tag = 'div';
 	  	$this->add_render_attribute('flipbox-card', 'class', 'pp-flipbox-flip-card');
@@ -1429,7 +1429,7 @@ class Flipbox extends Powerpack_Widget {
 	}
 
 	protected function render_front() {
-   		$settings = $this->get_settings();
+   		$settings = $this->get_settings_for_display();
 			
 		$this->add_render_attribute( 'icon-front', 'class', 'pp-flipbox-icon-image' );
 		
@@ -1493,7 +1493,7 @@ class Flipbox extends Powerpack_Widget {
 	}
 
 	protected function render_back() {
-   		$settings = $this->get_settings();
+   		$settings = $this->get_settings_for_display();
         
 	  	$pp_title_html_tag = 'h3';
         
@@ -1541,39 +1541,19 @@ class Flipbox extends Powerpack_Widget {
 	  	if ( $settings['link_type'] != 'none' ) {
 	  		if ( ! empty( $settings['link']['url'] ) ) {
 	  			if ( $settings['link_type'] == 'title' ) {
+
 	  				$pp_title_html_tag = 'a';
 
-	  				$this->add_render_attribute(
-	  					'title-container',
-		  				[
-		  					'class'	=> 'pp-flipbox-linked-title',
-		  					'href' => $settings['link']['url']
-		  				]
-		  			);
-
-	  				if ( $settings['link']['is_external'] ) {
-	  					$this->add_render_attribute('title-container', 'target', '_blank');
-	  				}
-
-	  				if ( $settings['link']['nofollow'] ) {
-	  					$this->add_render_attribute('title-container', 'rel', 'nofollow');
-	  				}
+	  				$this->add_render_attribute( 'title-container', 'class', 'pp-flipbox-linked-title' );
+					
+					$this->add_link_attributes( 'title-container', $settings['link'] );
+					
 	  			} elseif ( $settings['link_type'] == 'button' ) {
-	  				$this->add_render_attribute(
-	  					'button',
-	  					[
-	  						'class'	=> [ 'elementor-button', 'pp-flipbox-button', 'elementor-size-' . $settings['button_size'], ],
-	  						'href'	=> $settings['link']['url']
-	  					]
-	  				);
 
-	  				if ( $settings['link']['is_external'] ) {
-	  					$this->add_render_attribute('button', 'target', '_blank' );
-	  				}
-
-	  				if ( $settings['link']['nofollow'] ) {
-	  					$this->add_render_attribute('button', 'rel', 'nofollow' );
-	  				}
+	  				$this->add_render_attribute( 'button', 'class', [ 'elementor-button', 'pp-flipbox-button', 'elementor-size-' . $settings['button_size'], ] );
+					
+					$this->add_link_attributes( 'button', $settings['link'] );
+					
 	  			}
 	  		}
 	  	}
@@ -1581,21 +1561,9 @@ class Flipbox extends Powerpack_Widget {
         <div class="pp-flipbox-back">
             <?php
                 if ( $settings['link_type'] == 'box' && $settings['link']['url'] != '' ) {
-                $this->add_render_attribute(
-                    'box-link',
-                    [
-                        'class'	=> 'pp-flipbox-box-link',
-                        'href' => $settings['link']['url']
-                    ]
-                );
-
-                if ( $settings['link']['is_external'] ) {
-                    $this->add_render_attribute('box-link', 'target', '_blank');
-                }
-
-                if ( $settings['link']['nofollow'] ) {
-                    $this->add_render_attribute('box-link', 'rel', 'nofollow');
-                }
+                $this->add_render_attribute( 'box-link', 'class', 'pp-flipbox-box-link' );
+					
+				$this->add_link_attributes( 'box-link', $settings['link'] );
                 ?>
                 <a <?php echo $this->get_render_attribute_string('box-link'); ?>></a>
             <?php } ?>
@@ -1645,7 +1613,7 @@ class Flipbox extends Powerpack_Widget {
 	}
 
 	protected function render_button_icon() {
-   		$settings = $this->get_settings();
+   		$settings = $this->get_settings_for_display();
 		
 		if ( ! isset( $settings['button_icon'] ) && ! Icons_Manager::is_migration_allowed() ) {
 			// add old default

@@ -168,6 +168,55 @@ function pp_elements_lite_get_wpforms_forms() {
 	return $options;
 }
 
+// Get all forms of Formidable Forms plugin
+if ( ! function_exists( 'pp_elements_lite_get_formidable_forms' ) ) {
+	function pp_elements_lite_get_formidable_forms() {
+		if ( class_exists('FrmForm') ) {
+			$options = array();
+
+            $forms = FrmForm::get_published_forms( array(), 999, 'exclude' );
+            if ( count( $forms ) ) {
+				$i = 0;
+                foreach ( $forms as $form ) {
+					if ( 0 === $i ) {
+						$options[0] = esc_html__( 'Select a Contact form', 'powerpack' );
+					}
+                	$options[$form->id] = $form->name;
+					$i++;
+				}
+            }
+        } else {
+			$options = array();
+		}
+
+		return $options;
+	}
+}
+
+// Get all forms of Fluent Forms plugin
+if ( ! function_exists( 'pp_elements_lite_get_fluent_forms' ) ) {
+	function pp_elements_lite_get_fluent_forms() {
+		$options = array();
+
+		if ( function_exists( 'wpFluentForm' ) ) {
+			
+			global $wpdb;
+            
+            $result = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}fluentform_forms" );
+            if ( $result ) {
+                $options[0] = esc_html__('Select a Contact Form', 'powerpack');
+                foreach( $result as $form ) {
+                    $options[$form->id] = $form->title;
+                }
+            } else {
+                $options[0] = esc_html__('No forms found!', 'powerpack');
+            }
+		}
+
+		return $options;
+	}
+}
+
 // Get categories
 function pp_elements_lite_get_post_categories() {
 
@@ -383,10 +432,29 @@ function pp_elements_lite_get_modules() {
     if ( function_exists( 'wpforms' ) ) {
         $modules['pp-wpforms'] = esc_html__('WPForms', 'power-pack');
     }
+    
+    // Formidable Forms
+    if ( class_exists( 'FrmForm' ) ) {
+        $modules['pp-formidable-forms'] = __('Formidable Forms', 'powerpack');
+	}
+	
+	// Fluent Forms
+    if ( function_exists( 'wpFluentForm' ) ) {
+        $modules['pp-fluent-forms'] = __('Fluent Forms', 'powerpack');
+    }
 
     ksort($modules);
 
     return $modules;
+}
+
+function pp_elements_lite_get_extensions()
+{
+    $extensions = array(
+        'pp-display-conditions'           => __('Display Conditions', 'powerpack'),
+	);
+
+    return $extensions;
 }
 
 function pp_elements_lite_get_enabled_modules() {
@@ -397,6 +465,19 @@ function pp_elements_lite_get_enabled_modules() {
     } else {
         return $enabled_modules;
     }
+}
+
+function pp_elements_lite_get_enabled_extensions()
+{
+    $enabled_extensions = \PowerpackElementsLite\Classes\PP_Admin_Settings::get_option( 'pp_elementor_extensions', true );
+	
+	if ( ! is_array( $enabled_extensions ) ) {
+        return array();
+    } else {
+        return $enabled_extensions;
+    }
+
+	//return $enabled_extensions;
 }
 
 // Get templates
@@ -412,4 +493,16 @@ function pp_elements_lite_get_saved_templates( $templates = array() ) {
 	}
 
 	return $options;
+}
+
+/**
+ * Elementor
+ * 
+ * Retrieves the elementor plugin instance
+ *
+ * @since  1.2.9
+ * @return \Elementor\Plugin|$instace
+ */
+function pp_lite_get_elementor() {
+	return \Elementor\Plugin::$instance;
 }

@@ -20,6 +20,8 @@ class Modules_Manager {
 			'caldera-forms',
 			'content-ticker',
 			'flipbox',
+			'formidable-forms',
+			'fluent-forms',
 			'gravity-forms',
 			'ninja-forms',
 			'wpforms',
@@ -41,6 +43,7 @@ class Modules_Manager {
 			'scroll-image',
 			'team-member',
 			'twitter',
+			'query-control',
 		];
         
         ksort($modules);

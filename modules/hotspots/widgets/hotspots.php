@@ -128,33 +128,6 @@ class Hotspots extends Powerpack_Widget {
             ]
         );
         
-        $this->add_responsive_control(
-            'image_align',
-            [
-                'label'                 => __( 'Alignment', 'powerpack' ),
-                'type'                  => Controls_Manager::CHOOSE,
-				'label_block'           => true,
-                'options'               => [
-                    'left' 		=> [
-                        'title' => __( 'Left', 'powerpack' ),
-                        'icon' 	=> 'eicon-h-align-left',
-                    ],
-                    'center' 	=> [
-                        'title' => __( 'Center', 'powerpack' ),
-                        'icon' 	=> 'eicon-h-align-center',
-                    ],
-                    'right' 	=> [
-                        'title' => __( 'Right', 'powerpack' ),
-                        'icon' 	=> 'eicon-h-align-right',
-                    ],
-                ],
-                'prefix_class'          => 'pp-hotspot-img-align%s-',
-                'selectors'     => [
-                    '{{WRAPPER}} .pp-hot-spot-image' => 'text-align: {{VALUE}};',
-                ],
-            ]
-        );
-        
         $this->end_controls_section();
         
         /**
@@ -171,7 +144,7 @@ class Hotspots extends Powerpack_Widget {
         
         $repeater->start_controls_tabs( 'hot_spots_tabs' );
 
-        $repeater->start_controls_tab( 'tab_content', [ 'label' => __( 'Content', 'powerpack' ) ] );
+        $repeater->start_controls_tab( 'tab_content', [ 'label' => __( 'General', 'powerpack' ) ] );
         
             $repeater->add_control(
                 'hotspot_admin_label',
@@ -238,6 +211,61 @@ class Hotspots extends Powerpack_Widget {
                     ],
                 ]
             );
+
+            $repeater->add_control(
+                'left_position',
+                [
+                    'label'         => __( 'Left Position', 'powerpack' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'range'         => [
+                        'px' 	=> [
+                            'min' 	=> 0,
+                            'max' 	=> 100,
+                            'step'	=> 0.1,
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}}' => 'left: {{SIZE}}%;',
+                    ],
+                ]
+            );
+
+            $repeater->add_control(
+                'top_position',
+                [
+                    'label'         => __( 'Top Position', 'powerpack' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'range'         => [
+                        'px' 	=> [
+                            'min' 	=> 0,
+                            'max' 	=> 100,
+                            'step'	=> 0.1,
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}}' => 'top: {{SIZE}}%;',
+                    ],
+                ]
+            );
+
+			$repeater->add_control(
+				'hotspot_link',
+				[
+					'label'                 => __( 'Link', 'powerpack' ),
+					'type'                  => Controls_Manager::URL,
+					'dynamic'               => [
+						'active'   => true,
+					],
+					'placeholder'           => 'https://www.your-link.com',
+					'default'               => [
+						'url' => '#',
+					],
+				]
+			);
+        
+        $repeater->end_controls_tab();
+        
+        $repeater->start_controls_tab( 'tab_position', [ 'label' => __( 'Tooltip', 'powerpack' ) ] );
         
             $repeater->add_control(
                 'tooltip',
@@ -294,46 +322,6 @@ class Hotspots extends Powerpack_Widget {
                                 'value' => 'yes',
                             ],
                         ],
-                    ],
-                ]
-            );
-        
-        $repeater->end_controls_tab();
-        
-        $repeater->start_controls_tab( 'tab_position', [ 'label' => __( 'Position', 'powerpack' ) ] );
-
-            $repeater->add_control(
-                'left_position',
-                [
-                    'label'         => __( 'Left Position', 'powerpack' ),
-                    'type'          => Controls_Manager::SLIDER,
-                    'range'         => [
-                        'px' 	=> [
-                            'min' 	=> 0,
-                            'max' 	=> 100,
-                            'step'	=> 0.1,
-                        ],
-                    ],
-                    'selectors'     => [
-                        '{{WRAPPER}} {{CURRENT_ITEM}}' => 'left: {{SIZE}}%;',
-                    ],
-                ]
-            );
-
-            $repeater->add_control(
-                'top_position',
-                [
-                    'label'         => __( 'Top Position', 'powerpack' ),
-                    'type'          => Controls_Manager::SLIDER,
-                    'range'         => [
-                        'px' 	=> [
-                            'min' 	=> 0,
-                            'max' 	=> 100,
-                            'step'	=> 0.1,
-                        ],
-                    ],
-                    'selectors'     => [
-                        '{{WRAPPER}} {{CURRENT_ITEM}}' => 'top: {{SIZE}}%;',
                     ],
                 ]
             );
@@ -603,31 +591,30 @@ class Hotspots extends Powerpack_Widget {
         
         $this->end_controls_section();
 
-        /**
+		/**
 		 * Content Tab: Docs Links
 		 *
 		 * @since 1.4.8
 		 * @access protected
 		 */
 		$this->start_controls_section(
-    			'section_help_docs',
-    			[
-    				'label' => __( 'Help Docs', 'powerpack' ),
-    			]
-    		);
-    		
-    		$this->add_control(
-    			'help_doc_1',
-    			[
-    				'type'            => Controls_Manager::RAW_HTML,
-    				/* translators: %1$s doc link */
-    				'raw'             => sprintf( __( '%1$s Widget Overview %2$s', 'powerpack' ), '<a href="https://powerpackelements.com/docs/powerpack/widgets/image-hotspots/image-hotspots-widget-overview/?utm_source=widget&utm_medium=panel&utm_campaign=userkb" target="_blank" rel="noopener">', '</a>' ),
-    				'content_classes' => 'pp-editor-doc-links',
-    			]
-    		);
-    
-    		$this->end_controls_section();
-    
+			'section_help_docs',
+			[
+				'label' => __( 'Help Docs', 'powerpack' ),
+			]
+		);
+		
+		$this->add_control(
+			'help_doc_1',
+			[
+				'type'            => Controls_Manager::RAW_HTML,
+				/* translators: %1$s doc link */
+				'raw'             => sprintf( __( '%1$s Widget Overview %2$s', 'powerpack' ), '<a href="https://powerpackelements.com/docs/powerpack/widgets/image-hotspots/image-hotspots-widget-overview/?utm_source=widget&utm_medium=panel&utm_campaign=userkb" target="_blank" rel="noopener">', '</a>' ),
+				'content_classes' => 'pp-editor-doc-links',
+			]
+		);
+
+		$this->end_controls_section();
 
         /*-----------------------------------------------------------------------------------*/
         /*	STYLE TAB
@@ -664,6 +651,33 @@ class Hotspots extends Powerpack_Widget {
                 'size_units'            => [ 'px', '%' ],
                 'selectors'             => [
                     '{{WRAPPER}} .pp-hot-spot-image' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+        
+        $this->add_responsive_control(
+            'image_align',
+            [
+                'label'                 => __( 'Alignment', 'powerpack' ),
+                'type'                  => Controls_Manager::CHOOSE,
+				'label_block'           => false,
+                'options'               => [
+                    'left' 		=> [
+                        'title' => __( 'Left', 'powerpack' ),
+                        'icon' 	=> 'eicon-h-align-left',
+                    ],
+                    'center' 	=> [
+                        'title' => __( 'Center', 'powerpack' ),
+                        'icon' 	=> 'eicon-h-align-center',
+                    ],
+                    'right' 	=> [
+                        'title' => __( 'Right', 'powerpack' ),
+                        'icon' 	=> 'eicon-h-align-right',
+                    ],
+                ],
+                'prefix_class'          => 'pp-hotspot-img-align%s-',
+                'selectors'     => [
+                    '{{WRAPPER}} .pp-hot-spot-image' => 'text-align: {{VALUE}};',
                 ],
             ]
         );
@@ -886,7 +900,7 @@ class Hotspots extends Powerpack_Widget {
     }
 
     protected function render() {
-        $settings = $this->get_settings();
+        $settings = $this->get_settings_for_display();
 		$fallback_defaults = [
 			'fa fa-check',
 			'fa fa-times',
@@ -900,46 +914,53 @@ class Hotspots extends Powerpack_Widget {
         <div class="pp-image-hotspots">
             <div class="pp-hot-spot-image">
                 <?php
-                    $i = 1;
-                    foreach ( $settings['hot_spots'] as $index => $item ) :
+					foreach ( $settings['hot_spots'] as $index => $item ) :
 
-                    $this->add_render_attribute( 'hotspot' . $i, 'class', 'pp-hot-spot-wrap elementor-repeater-item-' . esc_attr( $item['_id'] ) );
-        
-                    if ( $item['tooltip'] == 'yes' && $item['tooltip_content'] != '' ) {
-                        $this->add_render_attribute( 'hotspot' . $i, 'class', 'pp-hot-spot-tooptip' );
-                        $this->add_render_attribute( 'hotspot' . $i, 'data-tooltip', $item['tooltip_content'] );
-                        
-                        if ( $item['tooltip_position_local'] != 'global' ) {
-                            $this->add_render_attribute( 'hotspot' . $i, 'data-tooltip-position', 'tt-' . $item['tooltip_position_local'] );
-                        } else {
-                            $this->add_render_attribute( 'hotspot' . $i, 'data-tooltip-position', 'tt-' . $settings['tooltip_position'] );
-                        }
+					$hotspot_tag = 'span';
+					$hotspot_key = $this->get_repeater_setting_key( 'hotspot', 'hot_spots', $index );
+					$hotspot_inner_key = $this->get_repeater_setting_key( 'hotspot-inner', 'hot_spots', $index );
+					$link_key = $this->get_repeater_setting_key( 'link', 'hot_spots', $index );
 
-                        if ( $settings['tooltip_size'] ) {
-                            $this->add_render_attribute( 'hotspot' . $i, 'data-tooltip-size', $settings['tooltip_size'] );
-                        }
+					$this->add_render_attribute( $hotspot_key, 'class', [
+						'pp-hot-spot-wrap',
+						'elementor-repeater-item-' . esc_attr( $item['_id'] )
+					] );
 
-                        if ( $settings['tooltip_width'] ) {
-                            $this->add_render_attribute( 'hotspot' . $i, 'data-tooltip-width', $settings['tooltip_width']['size'] );
-                        }
+					if ( $item['tooltip'] == 'yes' && $item['tooltip_content'] != '' ) {
+						if ( $item['tooltip_position_local'] != 'global' ) {
+							$tooltip_position = 'tt-' . $item['tooltip_position_local'];
+						} else {
+							$tooltip_position = 'tt-' . $settings['tooltip_position'];
+						}
 
-                        if ( $settings['tooltip_animation_in'] ) {
-                            $this->add_render_attribute( 'hotspot' . $i, 'data-tooltip-animation-in', $settings['tooltip_animation_in'] );
-                        }
+						$this->add_render_attribute( $hotspot_key, [
+							'class'					=> 'pp-hot-spot-tooptip',
+							'data-tooltip'			=> $item['tooltip_content'],
+							'data-tooltip-position'	=> $tooltip_position,
+							'data-tooltip-size'		=> $settings['tooltip_size']
+						] );
 
-                        if ( $settings['tooltip_animation_out'] ) {
-                            $this->add_render_attribute( 'hotspot' . $i, 'data-tooltip-animation-out', $settings['tooltip_animation_out'] );
-                        }
-                    }
-        
-                    $this->add_render_attribute( 'hotspot_inner_' . $i, 'class', 'pp-hot-spot-inner' );
-        
-                    if ( $settings['hotspot_pulse'] == 'yes' ) {
-                        $this->add_render_attribute( 'hotspot_inner_' . $i, 'class', 'hotspot-animation' );
-                    }
-		
+						if ( $settings['tooltip_width'] ) {
+							$this->add_render_attribute( $hotspot_key, 'data-tooltip-width', $settings['tooltip_width']['size'] );
+						}
+
+						if ( $settings['tooltip_animation_in'] ) {
+							$this->add_render_attribute( $hotspot_key, 'data-tooltip-animation-in', $settings['tooltip_animation_in'] );
+						}
+
+						if ( $settings['tooltip_animation_out'] ) {
+							$this->add_render_attribute( $hotspot_key, 'data-tooltip-animation-out', $settings['tooltip_animation_out'] );
+						}
+					}
+
+					$this->add_render_attribute( $hotspot_inner_key, 'class', 'pp-hot-spot-inner' );
+
+					if ( $settings['hotspot_pulse'] == 'yes' ) {
+						$this->add_render_attribute( $hotspot_inner_key, 'class', 'hotspot-animation' );
+					}
+
 					$migration_allowed = Icons_Manager::is_migration_allowed();
-		
+
 					// add old default
 					if ( ! isset( $item['hotspot_icon'] ) && ! $migration_allowed ) {
 						$item['hotspot_icon'] = isset( $fallback_defaults[ $index ] ) ? $fallback_defaults[ $index ] : 'fa fa-plus';
@@ -947,9 +968,20 @@ class Hotspots extends Powerpack_Widget {
 
 					$migrated = isset( $item['__fa4_migrated']['selected_icon'] );
 					$is_new = ! isset( $item['hotspot_icon'] ) && $migration_allowed;
-                    ?>
-                    <span <?php echo $this->get_render_attribute_string( 'hotspot' . $i ); ?>>
-                        <span <?php echo $this->get_render_attribute_string( 'hotspot_inner_' . $i ); ?>>
+					?>
+					<?php
+						if ( $item['hotspot_link']['url'] ) {
+							if ( $item['tooltip'] != 'yes' || ( $item['tooltip'] == 'yes' && $settings['tooltip_trigger'] == 'hover') ) {
+
+								$hotspot_tag = 'a';
+
+								$this->add_link_attributes( $hotspot_key, $item['hotspot_link'] );
+
+							}
+						}
+					?>
+					<<?php echo $hotspot_tag; ?> <?php echo $this->get_render_attribute_string( $hotspot_key ); ?>>
+						<span <?php echo $this->get_render_attribute_string( $hotspot_inner_key ); ?>>
 							<span class="pp-hotspot-icon-wrap">
 								<?php
 									if ( $item['hotspot_type'] == 'icon' ) {
@@ -958,7 +990,7 @@ class Hotspots extends Powerpack_Widget {
 											if ( $is_new || $migrated ) {
 												Icons_Manager::render_icon( $item['selected_icon'], [ 'aria-hidden' => 'true' ] );
 											} else { ?>
-													<i class="<?php echo esc_attr( $item['hotspot_icon'] ); ?>" aria-hidden="true"></i>
+												<i class="<?php echo esc_attr( $item['hotspot_icon'] ); ?>" aria-hidden="true"></i>
 											<?php }
 											echo '</span>';
 										}
@@ -967,10 +999,10 @@ class Hotspots extends Powerpack_Widget {
 										printf( '<span class="pp-hotspot-icon-wrap"><span class="pp-hotspot-text">%1$s</span></span>', esc_attr( $item['hotspot_text'] ) );
 									}
 								?>
-                        	</span>
-                        </span>
-                    </span>
-                <?php $i++; endforeach; ?>
+							</span>
+						</span>
+					</<?php echo $hotspot_tag; ?>>
+                <?php endforeach; ?>
                 
                 <?php echo Group_Control_Image_Size::get_attachment_image_html( $settings ); ?>
             </div>
@@ -992,50 +1024,69 @@ class Hotspots extends Powerpack_Widget {
         #>
         <div class="pp-image-hotspots">
             <div class="pp-hot-spot-image">
-                <# _.each( settings.hot_spots, function( item, index ) { #>
-                    <#
-                        var $tt_size            = ( settings.tooltip_size ) ? settings.tooltip_size : '';
-                        var $tt_animation_in    = ( settings.tooltip_animation_in ) ? settings.tooltip_animation_in : '';
-                        var $tt_animation_out   = ( settings.tooltip_animation_out ) ? settings.tooltip_animation_out : '';
-                        var $hotspot_animation  = ( settings.hotspot_pulse == 'yes' ) ? 'hotspot-animation' : '';
-                        var $tt_position = '';
-                       
-                        var $hotspot_key = 'hot_spots.' + (i - 1) + '.hotspot',
-					   		iconsHTML = {},
-							migrated = {};
-                       
-                        view.addRenderAttribute(
-                            $hotspot_key,
-                            {
-                                'class': [ 'pp-hot-spot-wrap', 'elementor-repeater-item-' + item._id ],
-                            }
-                        );
-                       
-                        if ( item.tooltip_position_local != 'global' ) {
-                            $tt_position = 'tt-' + item.tooltip_position_local;
-                        } else {
-                            $tt_position = 'tt-' + settings.tooltip_position;
-                        }
-                       
-                        if ( item.tooltip == 'yes' ) {
-                            view.addRenderAttribute(
-                                $hotspot_key,
-                                {
-                                    'class': [ 'pp-hot-spot-tooptip' ],
-                                    'data-tooltip': item.tooltip_content,
-                                    'data-tooltip-position': $tt_position,
-                                    'data-tooltip-size': $tt_size,
-                                    'data-tooltip-animation-in': $tt_animation_in,
-                                    'data-tooltip-animation-out': $tt_animation_out,
-                                }
-                            );
+                <# _.each( settings.hot_spots, function( item, index ) {
+				   
+					var hotspotTag 			= 'span',
+						$tt_size            = ( settings.tooltip_size ) ? settings.tooltip_size : '',
+						$tt_animation_in    = ( settings.tooltip_animation_in ) ? settings.tooltip_animation_in : '',
+						$tt_animation_out   = ( settings.tooltip_animation_out ) ? settings.tooltip_animation_out : '',
+						hotspotAnimation	= ( settings.hotspot_pulse == 'yes' ) ? 'hotspot-animation' : '',
+						ttPosition			= '',
+						iconsHTML			= {},
+						migrated			= {};
+
+					var hotspotKey 			= view.getRepeaterSettingKey( 'hotspot', 'hot_spots', index );
+
+					view.addRenderAttribute(
+						hotspotKey,
+						{
+							'class': [
+								'pp-hot-spot-wrap',
+								'elementor-repeater-item-' + item._id
+							],
+						}
+					);
+
+					if ( item.tooltip_position_local != 'global' ) {
+						ttPosition = 'tt-' + item.tooltip_position_local;
+					} else {
+						ttPosition = 'tt-' + settings.tooltip_position;
+					}
+
+					if ( item.tooltip == 'yes' ) {
+						view.addRenderAttribute(
+							hotspotKey,
+							{
+								'class': [ 'pp-hot-spot-tooptip' ],
+								'data-tooltip': item.tooltip_content,
+								'data-tooltip-position': ttPosition,
+								'data-tooltip-size': $tt_size,
+								'data-tooltip-animation-in': $tt_animation_in,
+								'data-tooltip-animation-out': $tt_animation_out,
+							}
+						);
+					}
+                    #>
+					<#
+                        if ( item.hotspot_link.url ) {
+							if ( item.tooltip != 'yes' || ( item.tooltip == 'yes' && settings.tooltip_trigger == 'hover' ) ) {
+								hotspotTag = 'a';
+
+								if ( item.hotspot_link.is_external ) {
+									view.addRenderAttribute( hotspotKey, 'target', '_blank' );
+								}
+
+								if ( item.hotspot_link.nofollow ) {
+									view.addRenderAttribute( hotspotKey, 'rel', 'nofollow' );
+								}
+							}
                         }
                     #>
-                    <span {{{ view.getRenderAttributeString( $hotspot_key ) }}}>
-                        <span class="pp-hot-spot-inner {{ $hotspot_animation }}">
+                    <{{ hotspotTag }} {{{ view.getRenderAttributeString( hotspotKey ) }}}>
+                        <span class="pp-hot-spot-inner {{ hotspotAnimation }}">
                             <# if ( item.hotspot_type == 'icon' ) { #>
                                 <span class="pp-hotspot-icon-wrap">
-                                    <span class="pp-hotspot-icon tooltip pp-icon">
+                                    <span class="pp-hotspot-icon pp-icon">
 										<#
 											iconsHTML[ index ] = elementor.helpers.renderIcon( view, item.selected_icon, { 'aria-hidden': true }, 'i', 'object' );
 											migrated[ index ] = elementor.helpers.isIconMigrated( item, 'selected_icon' );
@@ -1049,11 +1100,11 @@ class Hotspots extends Powerpack_Widget {
                                 </span>
                             <# } else if ( item.hotspot_type == 'text' ) { #>
                                 <span class="pp-hotspot-icon-wrap">
-                                    <span class="pp-hotspot-icon tooltip">{{ item.hotspot_text }}</span>
+                                    <span class="pp-hotspot-icon">{{ item.hotspot_text }}</span>
                                 </span>
                             <# } #>
                         </span>
-                    </span>
+                    </{{ hotspotTag }}>
                 <# i++ } ); #>
                 
                 <# if ( settings.image.url != '' ) { #>

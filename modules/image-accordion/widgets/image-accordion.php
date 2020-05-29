@@ -168,11 +168,11 @@ class Image_Accordion extends Powerpack_Widget {
         $repeater->add_control(
             'show_button',
             [
-                'label'                 => __( 'Show Button', 'power-pack' ),
+                'label'                 => __( 'Show Button', 'powerpack' ),
                 'type'                  => Controls_Manager::SWITCHER,
                 'default'               => '',
-                'label_on'              => __( 'Yes', 'power-pack' ),
-                'label_off'             => __( 'No', 'power-pack' ),
+                'label_on'              => __( 'Yes', 'powerpack' ),
+                'label_off'             => __( 'No', 'powerpack' ),
                 'return_value'          => 'yes',
             ]
         );
@@ -328,13 +328,33 @@ class Image_Accordion extends Powerpack_Widget {
             ]
         );
         
+        $this->add_control(
+            'title_html_tag',
+            [
+                'label'                => __( 'Title HTML Tag', 'powerpack' ),
+                'type'                 => Controls_Manager::SELECT,
+                'default'              => 'h2',
+				'separator'             => 'before',
+                'options'              => [
+                    'h1'     => __( 'H1', 'powerpack' ),
+                    'h2'     => __( 'H2', 'powerpack' ),
+                    'h3'     => __( 'H3', 'powerpack' ),
+                    'h4'     => __( 'H4', 'powerpack' ),
+                    'h5'     => __( 'H5', 'powerpack' ),
+                    'h6'     => __( 'H6', 'powerpack' ),
+                    'div'    => __( 'div', 'powerpack' ),
+                    'span'   => __( 'span', 'powerpack' ),
+                    'p'      => __( 'p', 'powerpack' ),
+                ],
+            ]
+        );
+        
         $this->add_group_control(
             Group_Control_Image_Size::get_type(),
             [
                 'name'                  => 'image',
-                'label'                 => __( 'Image Size', 'power-pack' ),
+                'label'                 => __( 'Image Size', 'powerpack' ),
                 'default'               => 'full',
-				'separator'             => 'before',
             ]
         );
 
@@ -1101,16 +1121,8 @@ class Image_Accordion extends Powerpack_Widget {
                             if ( $settings['button_hover_animation'] ) {
                                 $this->add_render_attribute( $button_key, 'class', 'elementor-animation-' . $settings['button_hover_animation'] );
                             }
-
-                            $this->add_render_attribute( $button_key, 'href', esc_url( $item['link']['url'] ) );
-
-                            if ( $item['link']['is_external'] ) {
-                                $this->add_render_attribute( $button_key, 'target', '_blank' );
-                            }
-
-                            if ( $item['link']['nofollow'] ) {
-                                $this->add_render_attribute( $button_key, 'rel', 'nofollow' );
-                            }
+							
+							$this->add_link_attributes( $button_key, $item['link'] );
                         }
                 
                         if ( $settings['active_tab'] ) {
@@ -1130,9 +1142,11 @@ class Image_Accordion extends Powerpack_Widget {
                         <div class="pp-image-accordion-overlay">
                             <div <?php echo $this->get_render_attribute_string( $content_key ); ?>>
                                 <div class="pp-image-accordion-content">
-                                    <h2 class="pp-image-accordion-title">
-                                        <?php echo $item['title']; ?>
-                                    </h2>
+									<?php
+										printf( '<%1$s class="pp-image-accordion-title">', $settings['title_html_tag'] );
+											echo $item['title'];
+										printf( '</%1$s>', $settings['title_html_tag'] );
+									?>
                                     <div class="pp-image-accordion-description">
                                         <?php echo $item['description']; ?>
                                     </div>

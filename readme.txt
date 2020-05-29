@@ -1,8 +1,8 @@
 === Elementor Addons -  PowerPack Addons for Elementor ===
-Contributors: ideaboxcreations
-Tags: elementor, addons, elementor addon, elementor widgets, elements, powerpack elementor addon
+Contributors: ideaboxcreations, simrandeep, puneetsahalot, ibachal, jainnidhi, prash17, nirbhay18
+Tags: elementor, addons, elementor addon, elementor widgets, elements, powerpack elementor addon, essential addons
 Requires at least: 4.7
-Tested up to: 5.2
+Tested up to: 5.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -84,12 +84,12 @@ https://www.youtube.com/watch?v=blCGxZujnJg
 18. [Magazine Slider](https://powerpackelements.com/demo/magazine-slider/) - Create magazine layout slider of posts
 19. [Video](https://powerpackelements.com/demo/video/) - A widget to embed videos on your website
 20. [Video Gallery](https://powerpackelements.com/demo/video-gallery/) - Create video gallery with filter options
-21. [Davices](https://powerpackelements.com/elementor-widgets/devices/) - Create stunning device mockups to present your work in a style. 
+21. [Devices](https://powerpackelements.com/elementor-widgets/devices/) - Create stunning device mockups to present your work in a style. 
 22. [Fancy Heading](https://powerpackelements.com/elementor-widgets/fancy-heading/) - Setup stylish headings on your Elementor website with gradient fill and background clipping options.
 23. [Review Box](https://powerpackelements.com/elementor-widgets/review-box/) - Display any kind of reviews with the Review box Elementor widget.
 
 ### 7 WooCommerce Elementor Widgets 
-** Get Special WooCommerce Elementor widgets with PowerPack Pro*
+** Get Special WooCommerce Elementor widgets with PowerPack Pro **
 1. [Woo Products](https://powerpackelements.com/demo/woo-product-grid/) - Multiple layout and styling options to create WooCommerce Product Grid and Carousel layouts on your Elementor website 
 2. [Woo Categories](https://powerpackelements.com/demo/woo-category) - Display a grid or carousel for WooCommerce Product Categories
 3. [Add to Cart Button](https://powerpackelements.com/demo/woo-add-to-cart/) - Easily add a special "add to cart" button for any product on any page with extensive styling options. 
@@ -149,6 +149,83 @@ Not at all! All the widgets and settings are easy to use with drag & drop interf
 
 
 == Changelog ==
+
+= 1.2.9.4 - May 7, 2020 =
+* 	Added: Advanced Accordion - Title HTML tag option
+* 	Fixed: Instagram Feed - Square images option was not working
+* 	Fixed: Image Hotspots, Flipbox - Dynamic tags were not working
+* 	Added: Icon List - Background color and hover colors for text
+
+= 1.2.9.3 - April 20, 2020 =
+* 	Added: Button width option
+* 	Fixed: WPML compatibility was missing for some widgets
+* 	Fixed: Gravity Forms CSS & JS files were loading on all pages
+* 	Fixed: Link effects CSS issue
+* 	Fixed: Title container HTML markup in Info Box and Info Box carousel widgets
+* 	Fixed: Lightbox and Image Link options in Instagram Feed widget
+
+= 1.2.9.2 - April 8, 2020 =
+* 	Fixed: Hotspot icon was not showing in editor in Image Hotspots widget
+* 	Added: Option to randomize logos in Logo Carousel widget
+* 	Fixed: Input fields padding option was not working in Gravity Forms widget
+* 	Fixed: Input focus background option was not working in Gravity Forms widget
+* 	Enhancement: Added styling for dropdown option in Gravity Forms widget
+* 	Updated "Input & Textarea" section label to "Input, Textarea & Dropdown" in Gravity Forms widget
+* 	Added input focus color option in Gravity Forms widget
+
+= 1.2.9.1 - March 29, 2020 =
+* 	Fixed: PHP error in query control
+
+= 1.2.9 - March 29, 2020 =
+* 	Enhancement: Updated query controls in Content Ticker and Advanced Accordion widgets
+
+= 1.2.8.7 - March 11, 2020 =
+* 	Fixed: Swiper slider after updating to Elementor 2.9.5
+
+= 1.2.8.6 - March 10, 2020 =
+* 	Added: Equal height boxes option in Info Box carousel widget
+* 	Removed Google+ icon option from Team Member carousel widget
+* 	Added: Image size option in Logo Grid widget
+* 	Added: Image width option in Logo Grid widget
+* 	Added: HTML tag option for heading and sub heading in Promo Box widget
+* 	Added: Icon number typography option in Info List widget
+* 	Added: Hotspot link option in Image Hotspots widget
+* 	Updated link options to support custom attribute option of Elementor 2.9.0
+* 	Fixed: Swiper slider for Elementor 2.9.0
+
+= 1.2.8.5 - February 18, 2020 =
+* 	Fixed: Content ticker was not working
+
+= 1.2.8.4 - February 6, 2020 =
+* 	Fixed: Lightbox option was not working in Instagram Feed widget
+* 	Added: Image Link option in Instagram Feed widget
+* 	Enhancement: Alignment, Vertical Position and Icon Size controls are now responsive in Flip Box widget
+
+= 1.2.8.3 - January 8, 2020 =
+* 	Added Currency Format option
+* 	Fixed: Custom currency symbol option was not working
+* 	Moved Additional Info option into Button section
+* 	Moved Alignment option to Style tab
+
+= 1.2.8.2 - December 9, 2019 =
+* 	Updated admin notice
+* 	Updated Instagram Feed widget
+
+= 1.2.8.1 - December 5, 2019 =
+* 	Added: Title HTML tag option in Image Accordion widget
+
+= 1.2.8 - November 27, 2019 =
+* 	New: Formidable Forms widget
+* 	New: Fluent Forms widget
+
+= 1.2.7.4 - November 1, 2019 =
+* 	Added: Added Title HTML tag option in Info List widget
+
+= 1.2.7.3 - October 14, 2019 =
+* 	Fixed: rel=nofollow was not working for button link
+
+= 1.2.7.2 - October 9, 2019 =
+* 	Added: Option to enable/disable extensions
 
 = 1.2.7.1 - October 3, 2019 =
 * 	Added: Orientation option in Image Accordion widget
